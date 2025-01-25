@@ -1,0 +1,142 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+% % COMMANDS
+\newcommand{\solution}{{\color{blue} \textsc{\ \ Solution.\ \ }}}
+
+
+% % SOME ENVIRONMENTS
+\newcommand{\exheading}[1]{\section*{Exercise #1}}
+\newcounter{exnum}
+% \setcounter{exnum}{1} % default 0 start
+\newcommand{\exercise}{
+    \stepcounter{exnum}
+    \exheading{\theexnum}
+    }
+
+\newcommand{\bea}{\begin{enumerate}[label={(\alph*)}]}
+\newcommand{\ee}{\end{enumerate}}
+
+
+
+\title{MAT 115B Homework 1}
+\author{Avery Li}
+\date{January 15, 2025}
+
+\begin{document}
+
+\maketitle
+
+
+\begin{flushleft}
+1.
+\end{flushleft}
+Let $n=\prod_{i=1}^k p_i^{r_i}$, then $\phi(n)=\prod_{i=1}^k p_i^{r_i-1}(p_i-1)$. Then we have that
+$p^{r_i-1}\vert n-1$ and $p^{r_i-1}\vert n$ for all $i$. Therefore, $r_i=1$ for all i, so $n$ is a product
+of distinct primes.
+
+\begin{flushleft}
+2.
+\begin{align*}
+    64&=2^6 \\
+    &\implies \sigma(64)=\frac{2^7-1}{2-1}=127\\
+    &\implies \tau(64)=6+1=7\\
+    105&=3\cdot 5\cdot 7\\
+    &\implies \sigma(105)=\frac{3^2-1}{3-1}\cdot\frac{5^2-1}{5-1}\cdot\frac{7^2-1}{7-1}=192\\
+    &\implies \tau(105)=2\cdot 2\cdot 2=8\\
+    2592&=2^5\cdot 3^4 \\
+    &\implies \sigma(2592)=\frac{2^6-1}{2-1}\cdot\frac{3^5-1}{3-1}=7623\\
+    &\implies \tau(2592)=6\cdot 5=30\\
+    4851&=3^2\cdot 7^2\cdot 11\\
+    &\implies \sigma(4851)=\frac{3^3-1}{3-1}\cdot\frac{7^3-1}{7-1}\cdot\frac{11^2-1}{11-1}=8892\\
+    &\implies \tau(4851)=(2+1)(2+1)(1+1)=18\\
+    111111&=3\cdot 7\cdot 11\cdot 13\cdot 37\\
+    &\implies \sigma(111111)=\frac{3^2-1}{3-1}\cdot\frac{7^2-1}{7-1}\cdot\frac{11^2-1}{11-1}\cdot\frac{13^2-1}{13-1}\cdot\frac{37^2-1}{37-1}\\
+    &\implies \tau(111111)=(1+1)(1+1)(1+1)(1+1)(1+1)=32\\
+    15!&=2^{11}\cdot 3^6\cdot 5^3\cdot 7^2\cdot 11\cdot 13\\
+    &\implies \sigma(15!)=\frac{2^{12}-1}{2-1}\cdot\frac{3^7-1}{3-1}\cdot\frac{5^4-1}{5-1}\cdot\frac{7^3-1}{7-1}\cdot\frac{11^2-1}{11-1}\cdot\frac{13^2-1}{13-1}=6686252969760\\
+    &\implies \tau(15!)=(11+1)(6+1)(3+1)(2+1)(1+1)(1+1)=4032\\
+\end{align*}
+\end{flushleft}
+
+\begin{flushleft}
+3.
+\end{flushleft}
+\begin{enumerate}
+    \item[a.] $\tau(n)$ is odd when the powers in the prime factorization of $n$ are all even.
+    \item[b.] $\sigma(n)$ is odd when $n=x^2$ or $n=2x^2$ for some integer $x\neq 0$. 
+\end{enumerate}
+
+\begin{flushleft}
+4.
+\end{flushleft}
+If there exists an $n$ such that $\tau(n)=k$, we can replace the primes in the prime factorization
+to obtain another $n'$ where $\tau(n')=k$. We have that $\tau(2^{k-1})=k$, therefore, $\tau(n)=k$ has 
+infinitely many solutions because there are infinitely many primes.
+
+\begin{flushleft}
+5.
+\end{flushleft}
+\begin{enumerate}
+    \item [a.] There are at most $\sqrt{n}$ divisors $a$ where $a\leq \frac{n}{a}$. Each of these divisors $a$ is paired off with another divisor $\frac{n}{a}$
+    where $a\cdot\frac{n}{a}=n$. Therefore, there are at most $2\sqrt{n}$ divisors, so $\tau(n)\leq 2\sqrt{n}$.
+    \item [b.] If $a\vert n$ then $2^{a}-1\vert 2^n-1$ because $2^n-1$ can be written $2^{ka}-1$. Therefore, $\tau(n)\leq\tau(2^n-1)$.
+\end{enumerate}
+
+
+\begin{flushleft}
+6.
+\end{flushleft}
+\begin{enumerate}
+    \item [a.]
+        \[\sum_{d\vert n, d>0}\frac{1}{d}=\sum_{d\vert n, d>0}\frac{\frac{n}{d}}{n}
+            =\frac{1}{n}\sum_{d\vert n, d>0}\frac{n}{d}
+            =\frac{1}{n}\sigma(n)
+            =\frac{\sigma(n)}{n}.\]
+    \item [b.]
+        \[
+            \sum_{d\vert n, d>0}\frac{1}{d}=\sum_{d\vert n, d>0}\frac{\frac{n}{d}}{n}
+            =\frac{1}{n}\sum_{d\vert n, d>0}\frac{n}{d}
+            =\frac{1}{n}\sigma(n)
+            =\frac{\sigma(n)}{n}
+            =\frac{2n}{n}
+            =2.\]
+
+\end{enumerate}
+
+\begin{flushleft}
+7.
+\end{flushleft}
+\begin{enumerate}
+    \item [a.]
+        \begin{align*}
+            \sigma(16)&=1+2+4+8+16=31\\
+            \sigma(31)&=1+31=32\\
+        \end{align*}
+    \item [b.]
+        \begin{align*}
+            \sigma(2^{p-1})&=\sum{i=0}^{p-1}2^i=2^p-1\\
+            \sigma(2^{p}-1)&=1+2^p-1=2^p\\
+        \end{align*}
+    \item [c.]
+        We have that $\sigma(2^a)=2^{a+1}-1$, then, $\sigma(2^{a+1}-1)=\sum_{d\vert 2^{a+1}-1}$.
+        Both $1$ and $2^{a+1}-1$ are divisors, so $\sigma(2^{a+1}-1)\geq 2^{a+1}$. If there are
+        any more divisors of $2^{a+1}-1$, then $\sigma(2^{a+1}-1)>2^{a+1}$. Therefore, for
+        $2^a$ to be superperfect, $2^{a+1}-1$ must be a Mersenne prime.
+
+\end{enumerate}
+
+\begin{flushleft}
+8.
+\end{flushleft}
+This homework was a 5/10 on difficulty. I spent 4 hours on this homework.
+
+\end{document}
