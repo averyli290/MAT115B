@@ -1,0 +1,115 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+% % COMMANDS
+\newcommand{\solution}{{\color{blue} \textsc{\ \ Solution.\ \ }}}
+
+
+% % SOME ENVIRONMENTS
+\newcommand{\exheading}[1]{\section*{Exercise #1}}
+\newcounter{exnum}
+% \setcounter{exnum}{1} % default 0 start
+\newcommand{\exercise}{
+    \stepcounter{exnum}
+    \exheading{\theexnum}
+    }
+
+\newcommand{\bea}{\begin{enumerate}[label={(\alph*)}]}
+\newcommand{\ee}{\end{enumerate}}
+
+
+
+\title{MAT 115B Homework 1}
+\author{Avery Li}
+\date{January 15, 2025}
+
+\begin{document}
+
+\maketitle
+
+
+\begin{flushleft}
+1.
+\end{flushleft}
+For each distinct prime number dividing n, we can choose to either include or exclude the prime in a product starting with the value $1$.
+Doing every combination of this generates every single divisor of $n$ that is square free. There are $2^{\omega(n)}$ combinations,
+and $|\mu(d)|=1$ when $d$ is square free. Therefore, $\sum_{d\vert n}|\mu(d)|=2^{\omega(n)}$.
+
+
+\begin{flushleft}
+2.
+\end{flushleft}
+Let $S=\{p_1,p_2,\dots,p_m\}$
+Consider a term in the expanded form of $\prod_i=1^m (1-f(p_i))$. It has the form $f(p_{t_1})f(p_{t_2})\cdots f(p_{t_\ell})(-1)^{\ell}=f(p_{t_1}p_{t_2}\cdots p_{t_\ell})(-1)^\ell$
+for some subset of prime divisors $S'=\{p_{t_1},p_{t_2},\dots,p_{t_\ell}\}\subseteq S$. If we take the product over all elements in $S'$
+we get $d=p_{t_1}p_{t_2}\cdots p_{t_\ell}$. Over the expanded form of the original product, we choose either $1$ or $-f(p_i)$ for each factor
+and this gives every combination of including or excluding each prime, namely, all subsets of the $S$. This gives all divisors $d$ of $n$
+which are square free because each prime can only be used once. Finally, $(-1)^\ell=\mu(d)$ because $d$ is prime free for each of the terms
+in the product. Therefore, the terms of expanded form of $\prod_{i=1}^m (1-f(p_i))$ are $f(d)\mu(d)$ for each square free $d\vert n$, which is $\sum_{d\vert n}\mu(d)f(d)$.
+
+\begin{flushleft}
+3.
+\end{flushleft}
+By M\"obius inversion, $g(n)=\sum_{d\vert n}\mu(d)f\left(\frac{n}{d}\right)$, so
+
+\begin{align*}
+    g(12)&=\mu(1)f(12)+\mu(2)f(6)+\mu(3)f(4)+\mu(4)f(3)+\mu(6)f(2)+\mu(12)f(1)\\
+    &= 8+(-1)4+(-1)\frac{8}{3}+0+(1)\frac{4}{3}+0\\
+    &=8-4-\frac{4}{3}\\
+    &=\frac{8}{3}.
+\end{align*}
+
+\begin{flushleft}
+4.
+\end{flushleft}
+Let $n=p_1^{r_1}p_2^{r_2}\cdots p_k^{r_k}$.
+We will first prove that $\sum_{d\vert n}\Lambda(d)=\ln n$,
+
+\begin{align*}
+    \sum_{d\vert n}\Lambda(d)&=\sum_{i=1}^k\sum_{j=1}^{r_i}\Lambda(p_i^{r_i}) \\
+    &=\sum_{i=1}^k\sum_{j=1}^{r_i} \ln p_i \\
+    &=\sum_{i=1}^k r_i\ln p_i \\
+    &=\sum_{i=1}^k \ln p_i^{r_i} \\
+    &=\ln(p_1^{r_1\cdots p_k^{r_k}}) \\
+    &=\ln n.
+\end{align*}
+Now, we will prove that $\Lambda(n)=-\sum_{d\vert n}\mu(d)\ln d$. By M\"obius inversion,
+\begin{align*}
+    \Lambda(n)&=\sum_{d\vert n}\mu(d)\ln\left(\frac{n}{d}\right) \\
+    &=\left(\sum_{d\vert n}\mu(d)\right)\ln n+\sum_{d\vert n}\mu(d)\ln\left(\frac{1}{d}\right) \\
+\end{align*}
+By a theorem proved in class we can simplify this to 
+\begin{align*}
+    \left(\sum_{d\vert n}\mu(d)\right)\ln n+\sum_{d\vert n}\mu(d)\ln\left(\frac{1}{d}\right)&=
+    0\ln n+\sum_{d\vert n}\mu(d)\ln\left(\frac{1}{d}\right) \\
+    \Lambda(n)&=-\sum_{d\vert n}\mu(d)\ln d \\
+\end{align*}
+Therefore, $\Lambda(n)=-\sum_{d\vert n}\mu(d)\ln d$.
+
+\begin{flushleft}
+5.
+\end{flushleft}
+Let $a,b$ be coprime. By M\"obius inversion, $F$ is multiplicative, and $c\vert a,d\vert b\implies \gcd(c, d)=1$, we have that
+\begin{align*}
+    f(a)f(b)&=\left(\sum_{c\vert a}\mu(c)F(\frac{a}{c})\right)\left(\sum_{d\vert b}\mu(d)F(\frac{b}{d})\right)\\
+    &=\sum_{c\vert a}\sum_{d\vert b}\mu(c)\mu(d)F(\frac{a}{c})F(\frac{b}{d})\\
+    &=\sum_{c\vert a}\sum_{d\vert b}\mu(cd)F(\frac{ab}{cd})\\
+    &=\sum_{e\vert ab}\mu(e)F(\frac{ab}{e})\\
+    &=f(ab).\\
+\end{align*}
+Therefore, if $F$ is multiplicative, then $f$ is multiplicative.
+
+\begin{flushleft}
+6.
+\end{flushleft}
+This homework was around 4 hours to complete with a 7/10 difficulty level.
+
+\end{document}

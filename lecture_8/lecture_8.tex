@@ -1,0 +1,279 @@
+% Adapted from the MIT/Berkeley scribe note template
+
+\documentclass[11pt,letter]{article}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{dsfont}
+\usepackage{bm}
+\usepackage{algorithm}
+
+\usepackage{xcolor}
+\definecolor{green}{rgb}{0.0, 0.5, 0.0}
+\usepackage[colorlinks,citecolor=blue,linkcolor=magenta,bookmarks=true,hypertexnames=false]{hyperref}
+\usepackage[nameinlink,capitalize]{cleveref}
+\providecommand\algorithmname{algorithm}
+\crefname{equation}{equation}{equations}
+\crefformat{equation}{(#2#1#3)}
+\crefname{lemma}{lemma}{lemmas}
+\crefname{claim}{claim}{claims}
+\crefname{theorem}{theorem}{theorems}
+\crefname{proposition}{proposition}{propositions}
+\crefname{corollary}{corollary}{corollaries}
+\crefname{claim}{claim}{claims}
+\crefname{remark}{remark}{remarks}
+\crefname{definition}{definition}{definitions}
+\crefname{fact}{fact}{facts}
+\crefname{question}{question}{questions}
+\crefname{condition}{condition}{conditions}
+\crefname{algorithm}{algorithm}{algorithms}
+\crefname{assumption}{assumption}{assumptions}
+\crefname{notation}{notation}{notation}
+\crefname{cond}{Condition}{Conditions}
+\crefname{problem}{problem}{problems}
+\crefname{formula}{formula}{formulas}
+\crefname{example}{example}{examples}
+
+% Number Theory
+\newcommand{\legendre}[2]{\ensuremath{\left( \frac{#1}{#2} \right) }}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+% Probability
+\renewcommand{\Pr}{\operatorname*{\mathbb{P}}}
+\newcommand{\Var}{\operatorname*{\mathrm{Var}}}
+\newcommand{\Cov}{\operatorname*{\mathrm{Cov}}}
+\newcommand{\Exp}{\operatorname*{\mathbb{E}}}
+\newcommand{\from}{\leftarrow}
+\newcommand{\negl}{\mathrm{negl}}
+
+% Asymptotics
+\newcommand{\poly}{\operatorname*{\mathrm{poly}}}
+\newcommand{\polylog}{\operatorname*{\mathrm{polylog}}}
+
+% Distributions
+\newcommand{\Normal}{\mathcal{N}}
+\newcommand{\Bin}{\mathrm{Bin}}
+\newcommand{\Poi}{\mathrm{Poi}}
+\newcommand{\Unif}{\mathrm{Unif}}
+\newcommand{\Bernoulli}{\mathrm{Ber}}
+\newcommand{\Geom}{\mathrm{Geom}}
+\newcommand{\DistD}{\mathcal{D}}
+\newcommand{\DistG}{\mathcal{G}}
+\newcommand{\DTV}{d_\mathrm{TV}}
+\newcommand{\DKL}{D_\mathrm{KL}}
+\renewcommand{\DH}{d_\mathrm{H}}
+\newcommand{\DK}{d_\mathrm{K}}
+
+% Sets and other mathematical constructs
+\renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
+\newcommand{\PSet}{\mathcal{P}}
+\newcommand{\Real}{\mathbb{R}}
+\newcommand{\Rational}{\mathbb{Q}}
+\newcommand{\Nat}{\mathbb{N}}
+\newcommand{\Int}{\mathbb{Z}}
+\newcommand{\argmax}{\operatorname*{\mathrm{arg\,max}}}
+\newcommand{\argmin}{\operatorname*{\mathrm{arg\,min}}}
+\renewcommand{\implies}{\Rightarrow}
+\newcommand{\2}{\{0, 1\}}
+\newcommand{\1}{\mathds{1}}
+
+% Calculus/Analysis
+\renewcommand{\d}{\mathrm{d}}
+\newcommand{\Diff}[2][]{\frac{\d#1}{\d#2}}
+\newcommand{\Grad}{\nabla}
+\newcommand{\Del}[2][]{\frac{\partial#1}{\partial#2}}
+
+% Linear algebra
+\newcommand{\tr}{\mathrm{tr}}
+\newcommand{\lmin}{\lambda_{\min}}
+\newcommand{\lmax}{\lambda_{\max}}
+
+% Miscellaneous
+\newcommand{\eps}{\epsilon}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\Chi}{\cX}
+\newcommand{\sgn}{\mathrm{sgn}}
+
+\newcommand{\new}[1]{{\color{red} #1}}
+
+
+% Project specific commands
+%
+
+\newcounter{nLectures}
+\newcounter{nTheorems}[nLectures]
+
+\newtheorem{theorem}[nTheorems]{Theorem}
+\newtheorem{corollary}[nTheorems]{Corollary}
+\newtheorem{conjecture}[nTheorems]{Conjecture}
+\newtheorem{lemma}[nTheorems]{Lemma}
+\newtheorem{proposition}[nTheorems]{Proposition}
+\newtheorem{protocol}[nTheorems]{Protocol}
+\newtheorem{claim}[nTheorems]{Claim}
+\newtheorem{fact}[nTheorems]{Fact}
+
+\theoremstyle{definition}
+\newtheorem{definition}[nTheorems]{Definition}
+\newtheorem{problem}[nTheorems]{Problem}
+\newtheorem{intuition}[nTheorems]{Intuition}
+\newtheorem{idea}[nTheorems]{Idea}
+\newtheorem{exercise}[nTheorems]{Exercise}
+\newtheorem{remark}[nTheorems]{Remark}
+\newtheorem{formula}[nTheorems]{Formula}
+\newtheorem{example}[nTheorems]{Example}
+
+\makeatletter
+	\let\c@algorithm\c@nTheorems
+\makeatother
+
+\usepackage{xpatch}
+\makeatletter
+\AtBeginDocument{\xpatchcmd{\@thm}{\thm@headpunct{.}}{\thm@headpunct{}}{}{}}
+\makeatother
+
+\hbadness=10000
+\vbadness=10000
+
+\setlength{\oddsidemargin}{.25in}
+\setlength{\evensidemargin}{.25in}
+\setlength{\textwidth}{6in}
+\setlength{\topmargin}{-0.4in}
+\setlength{\textheight}{9in}
+
+\newcommand{\lecture}[4]{
+	\setcounter{nLectures}{#1}
+	\renewcommand{\thenTheorems}{\arabic{nLectures}.\arabic{nTheorems}}
+	\renewcommand{\thealgorithm}{\arabic{nLectures}.\arabic{nTheorems}}
+	\noindent
+	\begin{center}
+	\framebox{
+		\vbox{
+		\hbox to 5.78in { {\bf MAT 115B Number Theory
+		\hfill Winter 2025} }
+		\hbox to 5.78in { {\it \hfill #4} }
+		\vspace{4mm}
+		\hbox to 5.78in { {\Large \hfill Lecture \arabic{nLectures} \hfill} }
+		\vspace{2mm}
+		\hbox to 5.78in { {\it Lecturer: Elena Fuchs \hfill Scribe: #3} }
+		}
+	}
+	\end{center}
+	\vspace*{4mm}
+}
+
+\begin{document}
+\lecture{8}{}{Avery Li}{January 24, 2025}
+
+\section*{Lecture 7 Recap}
+\begin{theorem}\label{thm:thm_8_1}
+	Let $p$ be an odd prime, then $\left(\frac{2}{p}\right)=(-1)^{\frac{p^2-1}{8}}$, $2$ is a quadratic residue
+	mod $p$ iff $p\equiv 1,7\Mod 8$, and is not when $p\equiv 3, 5\Mod 8$.
+\end{theorem}
+
+\section*{Lecture 8}
+\begin{example}
+    $p=17$, $\left(\frac{2}{17}\right)=1$ because $17\equiv 1\Mod 8$, $6^2\equiv 2\Mod 17$.
+\end{example}
+
+\begin{proof}[Proof of Theorem 8.1.]
+    We count the values of $2k>\frac{p}{2}$ iff $k>\frac{p}{4}$. There are $n=\frac{p-1}{2}-\lfloor\frac{p}{4}\rfloor$ total $k$.
+    Then, Gauss's lemma gives us that $\legendre{2}{p}=(-1)^n=(-1)^{\frac{p-1}{2}-\lfloor\frac{p}{4}\rfloor}$.
+    Now, we want to show that $n=\frac{p-1}{2}-\lfloor\frac{p}{4}\rfloor=\frac{p^2-1}{8}\Mod 2$.
+    We know that $p$ can be $1,3,5,7\Mod 8$. We will consider $5$, the other cases can be shown similarly.
+    Suppose $p=8k+5$ for some $k\in\Int$. Then we have
+    \begin{align*}
+        LHS &=\frac{8k+5-1}{2}-\lfloor\frac{8k+5}{4}\rfloor \\
+            &=4k+2-\lfloor 2k+\frac{5}{4}\rfloor \\
+            &=4k+2-2k-1 \\
+            &\equiv 1\Mod 2 \\
+        RHS&=\frac{(8k+5)^2-1}{8} \\
+            &=\frac{64k^2+80k+25-1}{8} \\
+            &=8k^2+10k+3 \\
+            &\equiv 1\Mod 2\\
+        \Longrightarrow LHS&\equiv RHS\Mod 2.
+    \end{align*}
+\end{proof}
+
+\section*{Quadratic Reciprocity}
+
+\begin{theorem}[Quadratic Reciprocity]\label{thm:thm_8_3}
+    Let $p,q$ be distinct odd primes, then $\legendre{p}{q}\cdot\legendre{q}{p}=(-1)^{\frac{p-1}{2}\frac{q-1}{2}}$.
+        \[
+        =
+        \begin{cases}
+            1\text{ if }p\equiv 1\Mod 4\text{ or } q\equiv 1\Mod 4 \\
+            -1\text{ if }p\equiv q\equiv 3\Mod 4 \\
+        \end{cases}
+        \]
+    Equivalently, $\legendre{q}{p}=(-1)^{\frac{p-1}{2}\cdot\frac{q-1}{2}}\legendre{p}{q}$,
+    i.e.
+    \[
+    \legendre{q}{p}=
+    \begin{cases}
+        \legendre{p}{q}\text{ if }p\equiv 1\Mod 4\text{ or } q\equiv 1\Mod 4 \\
+        -\legendre{p}{q}\text{ otherwise. }\\
+    \end{cases}
+    \]
+\end{theorem}
+How is this theorem useful?
+\begin{example}
+    We can now switch large ``denominators'' to the numerator, and vice versa.
+    $\legendre{3}{101}=\legendre{101}{3}=\legendre{2}{3}$ because $101\equiv 1\Mod 4$ and $101\equiv 2\Mod 3$.
+\end{example}
+\begin{example}
+    When is $\legendre{5}{p}=1$? We have that $\legendre{5}{p}=\legendre{p}{5}$ by the theorem. $\legendre{p}{5}=1$
+    iff $p\equiv 1,4\Mod 5$ by observation, therefore, $\legendre{5}{p}=1$ iff $p\equiv 1,4\Mod 5$.
+\end{example}
+\begin{example}
+    When is $\legendre{3}{p}=1$ and $\legendre{3}{p}=-1$? We have that $p=2$ works. if $p$ is odd, $p\neq 3$.
+    Then, $\legendre{3}{p}=\legendre{p}{3}$ iff $p\equiv 1\Mod 4$. We have that $\legendre{3}{p}=1$ iff $p\equiv 1\Mod 3$,
+    so $\legendre{3}{p}=1$ iff $p\equiv 1\Mod{12}$ by Chinese remainder theorem. This can be computed similarly
+    for $\legendre{3}{p}=-1$ to get $p\equiv 11\Mod{12}$.
+\end{example}
+\begin{remark}
+    Note that \hyperref[thm:thm_8_3]{8.3} does not work for $p=2$.
+\end{remark}
+
+\begin{example}
+    \textit{Compute $\legendre{-57}{103}$.}
+    
+    \begin{align*}
+        \legendre{-57}{103}&=\legendre{-1}{103}\legendre{3}{103}\legendre{19}{103} \\
+        &=-1\cdot -\legendre{103}{3}\cdot-\legendre{103}{19} &\ref{thm:thm_8_3}\\
+        &=-1\cdot\legendre{1}{3}\cdot\legendre{8}{19} &\text{ By LOGIC (using mod)}\\
+        &=-1\cdot 1\cdot \legendre{2}{19}^3 &\text{Properties of legendre symbol}\\
+        &=-1\cdot \legendre{2}{19}^3 \\
+        &=-1\cdot -1  & \ref{thm:thm_8_1} \\
+        &=1.\\
+    \end{align*}
+    
+\end{example}
+
+\end{document}
