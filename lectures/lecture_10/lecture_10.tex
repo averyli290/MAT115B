@@ -36,6 +36,12 @@
 \crefname{formula}{formula}{formulas}
 \crefname{example}{example}{examples}
 
+% Number Theory
+\newcommand{\legendre}[2]{\ensuremath{\left( \frac{#1}{#2} \right) }}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+\DeclareMathOperator{\ord}{ord}
+
+
 % Probability
 \renewcommand{\Pr}{\operatorname*{\mathbb{P}}}
 \newcommand{\Var}{\operatorname*{\mathrm{Var}}}
@@ -177,7 +183,7 @@
 		\vspace{4mm}
 		\hbox to 5.78in { {\Large \hfill Lecture \arabic{nLectures} \hfill} }
 		\vspace{2mm}
-		\hbox to 5.78in { {\it Lecturer: Elena Fuchs \hfill Scribe: #3} }
+		\hbox to 5.78in { {\it Lecturer: Martin Luu \hfill Scribe: #3} }
 		}
 	}
 	\end{center}
@@ -185,75 +191,49 @@
 }
 
 \begin{document}
-\lecture{7}{}{Avery Li}{January 22, 2025}
+\lecture{10}{}{Avery Li}{January 29, 2025}
 
+\section*{Lecture 8 Review}
+General process for computing Legendre symbol
+
+\section*{Jacobi Symbol}
+The Jacobi Symbol gives up on the direct connection of being a quadratic residue, generalizing it instead.
+It also retains nice Legendre-like properties, including multiplcativity and a Quadratic-reciprocity like
+statement. Note that this means that Jacobi symbols are as easy to compute as Legendre symbols.
+
+\begin{definition}
+The \textit{Jacobi symbol} is defined as follows: for $n = p_1^{\alpha_1} p_2^{\alpha_2} \cdots p_k^{\alpha_k}$
+\[
+	\legendre{a}{n} = \legendre{a}{p_1}^{\alpha_1} \legendre{a}{p_2}^{\alpha_2} \cdots \legendre{a}{p_k}^{\alpha_k}.
+\]
+\end{definition}
+
+\begin{remark}
+	hi
+\end{remark}
+
+\section*{Solovay-Stressen Primality Test}
+Note that in general, the Euler criterion does \textit{not} hold for Jacobi symbol mod composite $n$.
+For example, $\legendre{5}{21}\not\equiv 5^{\frac{21-1}{2}}\equiv 16\Mod{21}$, $16$ is not even $\pm 1$.
+To check if $N$ is prime, compute $\legendre{a}{N}$ and $a^\frac{N-1}{2}\Mod{N}$ for some random values $a$.
+If we find a value $a$ for which $\legendre{a}{N}\not\equiv a^{\frac{N-1}{2}}\Mod{n}$, we know that $N$
+is not prime. 
 \begin{fact}
-	The product of two quadratic residues is a quadratic residue and the product of two quadratic non-residues
-	is a quadratic residue.
+	If $N$ is composite, then at least half of all $a\Mod{n}$ that are coprime to $N$ will give a failure of the Euler Criterion.
 \end{fact}
-\begin{fact}
-	We have that $-1$ is a quadratic residue mod $p$ when $p\equiv 1\mod 4$.
-\end{fact}
+This gives us a probabilistic test, and the probability of error is at most $\frac{1}{2}$.
+However, calculating $\legendre{a}{N}$ requires factoring $N$, which would then already give us whether or not $N$
+is prime. We can use the ``Quadratic-reciprocity'' like property of Jacobi symbols to get around this and calculate it directly
+without ever factoring $N$.
 
-\begin{example}
-	$p=11$, quadratic residues are $1,3,4,5,9$. Look at $a,2a,3a,\dots\frac{p-1}{2}a\mod p$
-	\begin{center}
-	\begin{tabular}{ c|ccccc|ccccc|c }
-	\hline
-	 a & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11\\
-	\hline
-	 1 & * & * & * & * & * &   &   &   &   &   & 0 \\
-	 2 &   & * &   & * &   & * &   & * &   & * & 3 \\
-	 3 & * &   & * & * &   & * &   &   & * &   & 2 \\
-	 4 & * &   &   & * & * &   &   & * & * &   & 2 \\
-	 5 &   &   & * & * & * &   &   &   & * & * & 2 \\
-	 6 & * & * &   &   &   & * & * & * &   &   & 3 \\
-	 7 &   & * & * &   &   & * & * &   &   & * & 3 \\
-	 8 &   & * &   &   & * &   & * & * &   & * & 3 \\
-	 9 & * &   & * &   & * &   & * &   & * &   & 2 \\
-	 10&   &   &   &   & * & * & * & * & * & * & 5 \\
-	\end{tabular}
-	\end{center}
-	We'll now count how many  how many dots are past the middle line, note that 
-	all of the quadratic residues have even counts.
-\end{example}
+\begin{definition}
+	The \textit{primitive roots} $\Mod{m}$ are the numbers $a$ such that $\gcd(a, m) = 1$ and $a^{\phi(m)}\equiv 1\Mod{m}$.
+	In other words, it is coprime to $m$.
+\end{definition}
 
-\begin{lemma}
-	Let $p$ be an odd prime, let $p\not\vert a$. Let $n=|\{\frac{p+1}{2}\leq x\leq p-1\vert k\equiv ka\mod p \text{ for some }1\leq k\leq\frac{p-1}{2}\}|$.
-	Then $\left(\frac{a}{p}\right)=(-1)^n$.
-\end{lemma}
-\begin{proof}
-	Let $r_1, r_2,\dots, r_n$ be the $x$'s that we count above. Let $s_1,s_2,\dots,s_m$ be the other $ka\mod p$.
-	Compare $\{p-r_1,p-r_2,\dots,p-r_n,s_1s_2,\dots,s_m\}$ to $\{1,2,\dots,\frac{p-1}{2}\}$, we will show that these
-	are in fact the same sets.
-	If they are the same, then
-	\begin{align*}
-		&(p-r_1)(p-r_2)\cdots(p-r_n)s_1s_2\cdots s_m&=\left(\frac{p-1}{2}\right)! \\
-		&\equiv (-r_1)(-r_2)\cdots(-r_n)s_1s_2\cdots s_m\mod p \\
-		&\equiv (-1)^n r_1\cdot r_2\cdots r_n s_1s_2\cdots s_m\mod p \\
-		&\equiv (-1)^n a\cdot 2a\cdot 3a\cdots \frac{p-1}{2}a&\equiv \left(\frac{p-1}{2}\right)!\\
-		&\equiv (-1)^n a^{\frac{p-1}{2}}&\equiv 1\mod p\\
-		&\equiv (-1)^n \left(\frac{a}{p}\right)&\equiv 1\mod p\\
-		&\equiv \left(\frac{a}{p}\right)&\equiv (-1)^n\mod p\\
-	\end{align*}
-	Now we need to show that these sets are in fact the same.
-	Note that each of the differences $p-r_i\leq\frac{p-1}{2}$, then $\{p-r_1,p-r_2,\dots,p-r_n,s_1,\dots,s_m\}\subseteq\{1,2,\dots,\frac{p-1}{2}\}$.
-	Assume towards a contradiction that $r_i=s_j$ for some $i,j$. Then
-	\begin{align*}
-		&p-r+i\equiv s_j\mod p \\
-		&\implies -r_i\equiv s_j\mod p \\
-		&\implies r_i+s_j\equiv 0\mod p \\
-		&\implies p\vert r_i+s_j\equiv ka+la=(k+l)a\\
-	\end{align*}
-	Then, because $k,\ell\leq \frac{p-1}{2}$, we have that $k+l\leq p-1$. so we have $p\vert(k+\ell)a\implies p\vert a$. This is a contradiction
-	because we assumed that $p\not\vert a$. Therefore, $r_i\neq s_j$. Similarly, $p-r_i\neq p-r_j$ if $i\neq j$ because if this were true, then
-	$p\vert r_i-r_j\implies p\vert sa-ta\implies p\vert (s-t)a\implies p\vert a$, which is a contradiction.
-
-\end{proof}
-
-\begin{theorem}
-	Let $p$ be an odd prime, then $\left(\frac{2}{p}\right)=(-1)^{\frac{p^2-1}{8}}$, $2$ is a quadratic residue
-	mod $p$ if and only if $p\equiv 1,7\mod 8$.
-\end{theorem}
+\begin{definition}
+	Let $(a, m)=1$. The \textit{order} of $a$ modulo $m$ denoted $\ord_m(a)$ is the smallest $k$ such that $a^k\equiv 1\Mod{m}$.
+	Note that $\ord_m(a)\leq\varphi(m)$ .
+\end{definition}
 
 \end{document}
